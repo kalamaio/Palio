@@ -22,5 +22,5 @@ class Post ( db.Model):
     description = db.Column ( db.String(240))
     body = db.Column ( db.Text(), nullable = False )
     
-        def __repr__(self):
+    def __repr__(self):
         return f"Post ('{self.id}', '{self.title}')"
