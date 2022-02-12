@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import PrimaryKeyConstraint
+from werkzeug.security import generate_password_hash, check_password_hash
 from blog import db
 
 
@@ -13,6 +13,12 @@ class User (db.Model):
     
     def __repr__(self):
         return f"User('{self.id}', '{self.username}', '{self.emailk}')"
+    def set_password_hash ( self, password):
+        self.password = generate_password_hash ( password)
+    
+    def check_pasword ( self, password):
+        return check_password_hash ( self.password, password)
+    
     
 class Post ( db.Model):
     id = db.Column ( db.Integer, primary_key = True)
