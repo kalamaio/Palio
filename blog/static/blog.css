@@ -47,5 +47,16 @@ body {
 }
 
 .snipet {
- 
+    background-color: #fff;
+    border: 1px solid #d3d3d3;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+.p-small-one{
+    font-size: 0.875rem;
+}
+
+.p-small-two{
+    font-size: 0.800rem;
 }
