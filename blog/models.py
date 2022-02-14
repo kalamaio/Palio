@@ -1,4 +1,5 @@
 from datetime import datetime
+from time import strftime
 from werkzeug.security import generate_password_hash, check_password_hash
 from blog import db
 
@@ -30,3 +31,23 @@ class Post ( db.Model):
     
     def __repr__(self):
         return f"Post ('{self.id}', '{self.title}')"
+    
+    
+class Rioni (db.Model):
+    id = db.Column ( db.Integer, primary_key = True)
+    rione = db.Column ( db.String(120), nullable = False)
+    gare = db.relationship ( 'Gare', backref = 'gara', lazy = 'dynamic')
+    
+    def __repr__ (self):
+        return f"Rioni ('{self.id}', '{self.rione}')"
+    
+    
+class Gare (db.Model):
+    id = db.Column ( db.Integer, primary_key = True)
+    data = db.Column ( db.DateTime, default = datetime.now)
+    numero_corsa = db.Column ( db.Integer)
+    rione_id = db.Column ( db.Integer, db.ForeignKey('rioni.id'), nullable = False)
+    valido = db.Column ( db.Boolean, default= True, nullable = False)
+    
+    def __repr__(self) -> str:
+        return f"Gare ('{self.data(strftime ('%Y'))}', '{self.numero_corsa}')"
