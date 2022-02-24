@@ -1,5 +1,5 @@
 from flask import render_template, redirect, flash, url_for
-from flask_login import current_user, login_user, logout_user
+from flask_login import current_user, login_user, logout_user, login_required
 # Importa istanza di flask avviata dentro __init__.py
 from blog import app
 # Importa istanza di Post
