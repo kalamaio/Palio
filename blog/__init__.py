@@ -6,6 +6,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 #importa configurazioni
 from config import Config
+# Importa login manager
+from flask_login import LoginManager
 
 
 
@@ -14,6 +16,7 @@ app = Flask (__name__)
 app.config.from_object (Config)
 db = SQLAlchemy ( app )
 migrate = Migrate ( app, db)
+login_manager = LoginManager (app)
 
 
 # Impostazione che serve solo con sqllight per limitazione del database
