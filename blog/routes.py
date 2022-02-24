@@ -29,7 +29,7 @@ def login():
         return redirect(url_for("homepage"))
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        user = User.query.filter_by(username='testina').first()
         if user is None or not user.check_password(form.password.data):
             flash("username e password non combaciano!")
             return redirect(url_for("login"))
