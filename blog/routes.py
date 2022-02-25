@@ -40,4 +40,4 @@ def login():
 @app.route ("/logout")
 def logout():
     logout_user()
-    return render_template ("homepage.html")
+    return redirect ( url_for("homepage"))
