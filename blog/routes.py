@@ -3,7 +3,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 # Importa istanza di flask avviata dentro __init__.py
 from blog import app
 # Importa istanza di Post
-from blog.models import Post, Gare, User
+from blog.models import Post, Gare, User, Rioni
 # Importa form di login
 from blog.forms import LoginForm
 
