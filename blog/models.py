@@ -1,4 +1,6 @@
 from datetime import datetime
+import email
+from flask import session
 from werkzeug.security import generate_password_hash, check_password_hash
 from blog import db, login_manager
 from flask_login import UserMixin
@@ -12,7 +14,7 @@ class User (db.Model,UserMixin):
     id = db.Column ( db.Integer, primary_key = True)
     created_at = db.Column ( db.DateTime, default = datetime.now) 
     username = db.Column ( db.String(20), unique = True, nullable = False)
-    emailk = db.Column ( db.String(50), unique = True, nullable = False)
+    email = db.Column ( db.String(50), unique = True, nullable = False)
     password = db.Column ( db.String(250), nullable = False )
     posts = db.relationship ( 'Post', backref = 'author', lazy = 'dynamic')
     
@@ -40,7 +42,8 @@ class Post ( db.Model):
 class Rioni (db.Model):
     id = db.Column ( db.Integer, primary_key = True)
     rione = db.Column ( db.String(120), nullable = False)
-    gare = db.relationship ( 'Gare', backref = 'primo', lazy = 'dynamic')
+    gare = db.relationship('Gare', backref='rioni', lazy=True)
+
     
     
     def __repr__ (self):
@@ -49,10 +52,35 @@ class Rioni (db.Model):
 
 class Gare (db.Model):
     id = db.Column ( db.Integer, primary_key = True)
-    data = db.Column ( db.DateTime, default = datetime.now)
-    numero_corsa = db.Column ( db.Integer)
-    rione_id = db.Column ( db.Integer, db.ForeignKey('rioni.id'), nullable = False)
+    data = db.Column ( db.Date, default = datetime.now())
+    primo = db.Column (db.Integer)
+    secondo = db.Column (db.Integer)
+    terzo = db.Column (db.Integer)
+    quarto = db.Column (db.Integer)
+    quinto = db.Column (db.Integer)
     valido = db.Column ( db.Boolean, default= True, nullable = False)
+    rioni_id = db.Column (db.ForeignKey('rioni.id'))
     
     def __repr__(self) -> str:
         return f"Gare ('{self.data}', '{self.numero_corsa}')"
+    
+    
+def insert_data ():
+    from datetime import datetime
+    utente = User ( created_at = datetime.now(), username = 'test', email ='test@test.com', password = 'test')
+    
+    rione1 = Rioni (rione = 'Portaccia')
+    rione2 = Rioni (rione = 'Piazza')
+    rione3 = Rioni (rione = 'Ponte Giorngini')
+    rione4 = Rioni (rione = 'Marina')
+    rione5 = Rioni (rione = 'Castello')
+    rione6 = Rioni (rione = 'Null')
+    
+    from datetime import date
+    primo = Gare (data= date(1953, 8, 15), primo = 1, secondo = 2, terzo = 4, quarto = 5, quinto = 3, valido = False)
+    secondo = Gare (data= date(1954, 8, 15), primo = 2, secondo = 1, terzo = 5, quarto = 4, quinto = 3, valido = False)
+    terzo = Gare (data= date(1955, 8, 15), primo = 3, secondo = 2, terzo = 4, quarto = 5, quinto = 1, valido = False)
+    
+    db.session.add_all ([rione1, rione2, rione3, rione4, rione5, rione6, primo, secondo, terzo])
+    db.session.commit ()
+      
