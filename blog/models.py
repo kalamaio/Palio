@@ -69,7 +69,7 @@ class Gare (db.Model):
     
 def insert_data ():
     from datetime import datetime
-    utente = User ( created_at = datetime.now(), username = 'test', email ='test@test.com', password = 'test')
+    utente = User ( created_at = datetime.now(), username = 'test', email ='test@test.com', password = generate_password_hash ('test'))
     
     post1 = Post (author = utente, created_at = datetime.now(), title = 'Primo Post', description = 'Prima Descirzione', body = 'testto tanto per')
     post2 = Post (author = utente, created_at = datetime.now(), title = 'Secondo Post', description = 'Seconda Descirzione', body = 'testto tanto per')

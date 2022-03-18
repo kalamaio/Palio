@@ -7,17 +7,13 @@
     <div class="row no-gutters">
         <div class="col-md-9 order-md-2">
             {% for palio in palii %}
-            <div class="single-post-home">{{palio}}</div>
-                {% endfor %}
-            {% for palio in palii %}
             <div class="single-post-home">
                 {% if palio.primo %}
                 <h5>{{palio.id}}° Palio Marinaro</h5>
                 {% endif %}
                 <p class="p-small-two text-muted">Anno :{{palio.data.strftime('%Y') }}</p>
-                <p class="p-small-one text-muted mb-0">{{palio.primo}}</p>
                 <p class="p-small-one text-muted mb-0">{{palio.rioni.rione}}</p>
-                <p>Vincitore: {{palio.primo.rione}}</p>
+                <p>Vincitore: {{palio.rioni.rione}}</p>
             </div>
             {% endfor %}
         </div>
