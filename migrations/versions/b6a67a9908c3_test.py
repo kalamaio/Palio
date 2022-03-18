@@ -1,8 +1,8 @@
-"""prima migrazione
+"""test
 
-Revision ID: 03b15f0f9fec
+Revision ID: b6a67a9908c3
 Revises: 
-Create Date: 2022-02-14 23:56:26.927059
+Create Date: 2022-03-18 18:50:40.509558
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '03b15f0f9fec'
+revision = 'b6a67a9908c3'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -27,19 +27,23 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('username', sa.String(length=20), nullable=False),
-    sa.Column('emailk', sa.String(length=50), nullable=False),
+    sa.Column('email', sa.String(length=50), nullable=False),
     sa.Column('password', sa.String(length=250), nullable=False),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('emailk'),
+    sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
     )
     op.create_table('gare',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('data', sa.DateTime(), nullable=True),
-    sa.Column('numero_corsa', sa.Integer(), nullable=True),
-    sa.Column('rione_id', sa.Integer(), nullable=False),
+    sa.Column('data', sa.Date(), nullable=True),
+    sa.Column('primo', sa.Integer(), nullable=True),
+    sa.Column('secondo', sa.Integer(), nullable=True),
+    sa.Column('terzo', sa.Integer(), nullable=True),
+    sa.Column('quarto', sa.Integer(), nullable=True),
+    sa.Column('quinto', sa.Integer(), nullable=True),
     sa.Column('valido', sa.Boolean(), nullable=False),
-    sa.ForeignKeyConstraint(['rione_id'], ['rioni.id'], ),
+    sa.Column('rioni_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['rioni_id'], ['rioni.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('post',
