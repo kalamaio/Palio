@@ -6,14 +6,19 @@
 <div class="container content-container">
     <div class="row no-gutters">
         <div class="col-md-9 order-md-2">
-            {% for palio in palii %}
+        <div class="single-post-home">
+        <h5>Lista Pali corsi per anno</h5>
+        {% for data in date %}
+            <h3><a class="nav-link" href="{{ url_for ('palio_dettaglio', palio_id = data.id) }}">{{data.data.strftime ('%Y')}}</a></h3>
+        {% endfor%}
+        </div>
+            {% for risultato in risultati %}
             <div class="single-post-home">
-                {% if palio.primo %}
-                <h5>{{palio.id}}° Palio Marinaro</h5>
-                {% endif %}
-                <p class="p-small-two text-muted">Anno :{{palio.data.strftime('%Y') }}</p>
-                <p class="p-small-one text-muted mb-0">{{palio.rioni.rione}}</p>
-                <p>Vincitore: {{palio.rioni.rione}}</p>
+                <h5>{{risultato.gare_id}}° Palio Marinaro</h5>
+                {{risultato.rioni.rione}}
+                <p class="p-small-two text-muted">Anno :{{risultato.gare.data.strftime('%Y') }}</p>
+                <p class="p-small-one text-muted mb-0">{{risultato.posizione}}</p>
+                <p class="p-small-one text-muted mb-0">{{risultato.nome}}</p>                
             </div>
             {% endfor %}
         </div>

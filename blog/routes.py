@@ -1,11 +1,13 @@
+
 from flask import render_template, redirect, flash, url_for
 from flask_login import current_user, login_user, logout_user, login_required
 # Importa istanza di flask avviata dentro __init__.py
 from blog import app
 # Importa istanza di Post
-from blog.models import Post, Gare, User, Rioni
+from blog.models import Post, Gare, User, Rioni, Risultati
 # Importa form di login
 from blog.forms import LoginForm
+
 
 # Definizione delle rotte del sito 
 @app.route ("/")
@@ -15,9 +17,16 @@ def homepage ():
 
 @app.route ('/palio')
 def palio ():
-    palii = Gare.query.all()
-    return render_template ('palio_lista.html', palii = palii)
+    risultati = Risultati.query.order_by(Risultati.gare_id.asc()).all()
+    date= Gare.query.order_by (Gare.data.asc()).all()
+    return render_template ('palio_lista.html', risultati = risultati, date = date)
+
+@app.route ('/palio/<int:palio_id>/singolo', methods=['GET', 'POST'])
+def palio_dettaglio (palio_id):
     
+    risultati = Risultati.query.filter_by(gare_id = palio_id).all()
+   
+    return render_template ('palio_dett.html', gara= risultati)
 
 @app.route ('/about')
 def about ():
