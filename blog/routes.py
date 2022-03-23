@@ -25,6 +25,7 @@ def palio ():
 def palio_dettaglio (palio_id):
     
     risultati = Risultati.query.filter_by(gare_id = palio_id).all()
+    #anno = Gare.query.filter_by (Gare.id == palio_id).first()
    
     return render_template ('palio_dett.html', gara= risultati)
 

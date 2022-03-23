@@ -60,3 +60,10 @@ body {
 .p-small-two{
     font-size: 0.800rem;
 }
+
+ul {
+    list-style-type: none;
+    padding-left: 0px;
+    padding-top:  30px;
+    padding-bottom: 0px;
+}
