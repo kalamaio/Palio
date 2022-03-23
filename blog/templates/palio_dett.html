@@ -7,7 +7,9 @@
     <div class="row no-gutters">
         <div class="col-md-9 order-md-2">
         <div class="single-post-home">
-        <h5>Palio anno {{ gara[0].gare.data.strftime ('%Y') }}</h5>
+        <h5 class="lead">Palio anno {{ gara[0].gare.data.strftime ('%Y') }}</h5>
+        <hr>
+        <h5>Risultati:</h5>
         <ul>
         {% for g in gara %}
             <li>
