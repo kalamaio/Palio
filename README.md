@@ -1,5 +1,7 @@
 # Sito web per il palio 
 
-**Versione Alpha 1.0.0**
+**Versione Alpha 0.0.1**
 
 Use flask 
+
+Implementare utente admin 
