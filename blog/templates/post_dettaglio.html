@@ -1,18 +1,16 @@
 {% extends 'base.html' %}
-{% block title %}Home {% endblock %}
+{% block title %}{{post.title}} {% endblock %}
 {% block content %}
 <div class="container content-container">
     <div class="row no-gutters">
         <div class="col-md-9 order-md-2">
-            {% for post in posts %}
             <div class="single-post-home">
-                <h5><a href="{{ url_for ('post_dettaglio', post_id= post.id) }}">{{post.title}}</a></h5>
+                <h5>{{post.title}}</h5> <a class="link-secondary text-end" href= "{{url_for ('homepage')}}"> <i class="bi bi-caret-left-square"></i>Back</a>
+                <hr>
                 <p class="p-small-two text-muted">{{post.created_at.strftime('%d.%m.%Y') }}</p>
-                {% if post.description %}
-                <p class="p-small-one text-muted mb-0">{{post.description}}</p>
-                {% endif %}
+                <hr>
+                <p>{{post.body}}</p>
             </div>
-            {% endfor %}
         </div>
         <div class="col-md-3 order-md-1">
             {% include 'about_snippet.html' %}

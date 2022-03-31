@@ -6,13 +6,25 @@
 <div class="container content-container">
     <div class="row no-gutters">
         <div class="col-md-9 order-md-2">
-            <div class="single-post-home">
-                <h5>Lista Pali corsi per anno</h5>
-                    {% for data in date %}
-                        <h3><a class="nav-link" href="{{ url_for ('palio_dettaglio', palio_id = data.id) }}">{{data.data.strftime ('%Y')}}</a></h3>
-                    {% endfor%}
-            </div>
-        </div>
+                    
+                    {% for risultato in risultati %}
+                    <div class="single-post-home">
+                    <h5 style ="padding-bottom: 15px;">Palio corso nel anno <strong>{{risultato[0].gare.data.strftime ('%Y')}}</strong></h5>
+                        {% for result in risultato%}
+                        <div class="container tabella">
+                        <div class="row align-items-start">
+                            <div class="col">
+                            <p class= "tabella">Rione: <strong>{{result.rioni.rione}}</strong></p>
+                            </div>
+                            <div class="col">
+                            <p class= "tabella"> Classificato <strong>{{result.ordine.classificato}}</strong></p>
+                            </div>
+                        </div>
+                        </diV>
+                        {% endfor %}
+                        </div>
+                    {% endfor %}
+    </div>
     <div class="col-md-3 order-md-1">
             {% include 'about_snippet.html' %}
     </div>

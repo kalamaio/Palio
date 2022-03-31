@@ -1,5 +1,5 @@
 
-from flask import render_template, redirect, flash, url_for
+from flask import render_template, redirect, flash, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 # Importa istanza di flask avviata dentro __init__.py
 from blog import app
@@ -15,19 +15,28 @@ def homepage ():
     posts = Post.query.order_by(Post.created_at.desc()).all()
     return render_template ('homepage.html', posts = posts)
 
+@app.route ("/post/<int:post_id>")
+def post_dettaglio (post_id):
+    post= Post.query.get_or_404 (post_id)
+    return render_template ('post_dettaglio.html', post= post)
+
 @app.route ('/palio')
 def palio ():
-    risultati = Risultati.query.order_by(Risultati.gare_id.asc()).all()
     date= Gare.query.order_by (Gare.data.asc()).all()
-    return render_template ('palio_lista.html', risultati = risultati, date = date)
+    pali = []
+    for data in date:
+        pali_list = Risultati.query.filter (Risultati.gare_id == data.id).order_by (Risultati.ordine_id.asc ()).all()
+        pali.append (pali_list)
+        
+    return render_template ('palio_lista.html', risultati = pali, date = date)
 
-@app.route ('/palio/<int:palio_id>/singolo', methods=['GET', 'POST'])
+'''@app.route ('/palio/<int:palio_id>/singolo', methods=['GET', 'POST'])
 def palio_dettaglio (palio_id):
     
     risultati = Risultati.query.filter_by(gare_id = palio_id).all()
     #anno = Gare.query.filter_by (Gare.id == palio_id).first()
    
-    return render_template ('palio_dett.html', gara= risultati)
+    return render_template ('palio_dett.html', gara= risultati)'''
 
 @app.route ('/about')
 def about ():

@@ -4,6 +4,9 @@ body {
     font-family: Montserrat;
     background-color: #f0f0f0;
 
+}
+a {
+    text-decoration: none;
 
 }
 .content-container {
@@ -68,3 +71,26 @@ ul {
     padding-bottom: 0px;
     margin: 0px;
 }
+    
+
+.container.tabella:nth-child(odd) {
+    border: 1px solid #d3d3d3;
+    border-radius: 5px;
+    text-indent: 16px;
+
+    background: #f0f0f0;
+    margin: opx;
+    padding: 0px; 
+    
+    }
+    
+.container.tabella:nth-child(even) {
+    border: 1px solid #d3d3d3;
+    border-radius: 5px;
+    text-indent: 16px;
+    
+    background: #fff;
+    margin: opx;
+    padding: 0px;
+    
+    }

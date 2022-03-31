@@ -1,8 +1,8 @@
-"""prima migrazione
+"""first
 
-Revision ID: 4604f4b27b3b
+Revision ID: 622dcd1638ee
 Revises: 
-Create Date: 2022-03-21 13:46:35.101459
+Create Date: 2022-03-24 20:10:23.784437
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '4604f4b27b3b'
+revision = '622dcd1638ee'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,6 +21,11 @@ def upgrade():
     op.create_table('gare',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('data', sa.DateTime(), nullable=True),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('ordine',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('classificato', sa.String(length=100), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('rioni',
@@ -50,10 +55,11 @@ def upgrade():
     )
     op.create_table('risultati',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('posizione', sa.String(length=100), nullable=True),
+    sa.Column('ordine_id', sa.Integer(), nullable=True),
     sa.Column('rioni_id', sa.Integer(), nullable=True),
     sa.Column('gare_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['gare_id'], ['gare.id'], ),
+    sa.ForeignKeyConstraint(['ordine_id'], ['ordine.id'], ),
     sa.ForeignKeyConstraint(['rioni_id'], ['rioni.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -66,5 +72,6 @@ def downgrade():
     op.drop_table('post')
     op.drop_table('user')
     op.drop_table('rioni')
+    op.drop_table('ordine')
     op.drop_table('gare')
     # ### end Alembic commands ###

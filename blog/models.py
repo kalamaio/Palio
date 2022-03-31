@@ -4,6 +4,12 @@ from flask import session
 from werkzeug.security import generate_password_hash, check_password_hash
 from blog import db, login_manager
 from flask_login import UserMixin
+from faker import Faker
+from faker.providers import lorem
+
+# Imposta faker per riempire database
+fake = Faker ('it_IT')
+fake.add_provider (lorem)
 
 
 @login_manager.user_loader
@@ -53,12 +59,12 @@ class Rioni (db.Model):
 
 class Risultati (db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    posizione = db.Column(db.String(100))
+    ordine_id = db.Column(db.ForeignKey('ordine.id'))
     rioni_id = db.Column(db.ForeignKey('rioni.id'))
     gare_id = db.Column(db.ForeignKey('gare.id'))
 
     def __repr__(self) -> str:
-        return f"Risultati ({self.id}', '{self.posizione}', '{self.rioni_id}', '{self.gare_id})"
+        return f"Risultati ({self.id}', '{self.rioni_id}', '{self.gare_id})"
 
 
 class Gare (db.Model):
@@ -68,6 +74,14 @@ class Gare (db.Model):
 
     def __repr__(self) -> str:
         return f"Gare ('{self.data}', '{self.risultati}', '{self.id})"
+    
+class Ordine (db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    classificato = db.Column(db.String(100))
+    risultati = db.relationship('Risultati', backref='ordine', lazy=True)
+    
+    def __repr__(self) -> str:
+        return f"Ordine ('{self.classificato}')"
 
 
 def insert_data():
@@ -76,13 +90,13 @@ def insert_data():
                   email='test@test.com', password=generate_password_hash('test'))
 
     post1 = Post(author=utente, created_at=datetime.now(),
-                 title='Primo Post', description='Prima Descirzione', body='testto tanto per')
+                 title='Primo Post', description='Prima Descirzione', body= fake.paragraph (nb_sentences = 30))
 
     post2 = Post(author=utente, created_at=datetime.now(), title='Secondo Post',
-                 description='Seconda Descirzione', body='testto tanto per')
+                 description='Seconda Descirzione', body= fake.paragraph (nb_sentences = 30))
 
     post3 = Post(author=utente, created_at=datetime.now(),
-                 title='Terzo Post', description='Terza Descirzione', body='testto tanto per')
+                 title='Terzo Post', description='Terza Descirzione', body= fake.paragraph (nb_sentences = 30))
 
     rione1 = Rioni(rione='Portaccia')
     rione2 = Rioni(rione='Piazza')
@@ -90,6 +104,13 @@ def insert_data():
     rione4 = Rioni(rione='Marina')
     rione5 = Rioni(rione='Castello')
     rione6 = Rioni(rione='Null')
+    
+    ordine1 = Ordine (classificato = 'Primo')
+    ordine2 = Ordine (classificato = 'Secondo')
+    ordine3 = Ordine (classificato = 'Terzo')
+    ordine4 = Ordine (classificato = 'Quarto')
+    ordine5 = Ordine (classificato = 'Quinto')
+
 
     from datetime import date
     gara1 = Gare(data=date(1953, 8, 15))
@@ -98,23 +119,30 @@ def insert_data():
     gara4 = Gare(data=date(1956, 8, 15))
 
     # gara 1
-    risultato11 = Risultati(posizione='Primo', gare=gara1, rioni=rione1)
-    risultato12 = Risultati(posizione='Secondo', gare=gara1, rioni=rione2)
-    risultato13 = Risultati(posizione='Terzo', gare=gara1, rioni=rione3)
-    risultato14 = Risultati(posizione='Quarto', gare=gara1, rioni=rione4)
-    risultato15 = Risultati(posizione='Quinto', gare=gara1, rioni=rione5)
+    risultato11 = Risultati(ordine = ordine1, gare=gara1, rioni=rione1)
+    risultato12 = Risultati(ordine = ordine2, gare=gara1, rioni=rione2)
+    risultato13 = Risultati(ordine = ordine3, gare=gara1, rioni=rione3)
+    risultato14 = Risultati(ordine = ordine4, gare=gara1, rioni=rione4)
+    risultato15 = Risultati(ordine = ordine5, gare=gara1, rioni=rione5)
     # gara 2
-    risultato21 = Risultati(posizione='Primo', gare=gara2, rioni=rione2)
-    risultato22 = Risultati(posizione='Secondo', gare=gara2, rioni=rione1)
-    risultato23 = Risultati(posizione='Terzo', gare=gara2, rioni=rione5)
-    risultato24 = Risultati(posizione='Quarto', gare=gara2, rioni=rione4)
-    risultato25 = Risultati(posizione='Quinto', gare=gara2, rioni=rione3)
+    risultato21 = Risultati(ordine = ordine1, gare=gara2, rioni=rione2)
+    risultato22 = Risultati(ordine = ordine2, gare=gara2, rioni=rione1)
+    risultato23 = Risultati(ordine = ordine3, gare=gara2, rioni=rione5)
+    risultato24 = Risultati(ordine = ordine4, gare=gara2, rioni=rione4)
+    risultato25 = Risultati(ordine = ordine5, gare=gara2, rioni=rione3)
     # Gara 3
-    risultato31 = Risultati(posizione='Primo', gare=gara3, rioni=rione5)
-    risultato32 = Risultati(posizione='Secondo', gare=gara3, rioni=rione4)
-    risultato33 = Risultati(posizione='Terzo', gare=gara3, rioni=rione3)
-    risultato34 = Risultati(posizione='Quarto', gare=gara3, rioni=rione2)
-    risultato35 = Risultati(posizione='Quinto', gare=gara3, rioni=rione1)
+    risultato31 = Risultati(ordine = ordine1, gare=gara3, rioni=rione5)
+    risultato32 = Risultati(ordine = ordine2, gare=gara3, rioni=rione4)
+    risultato33 = Risultati(ordine = ordine3, gare=gara3, rioni=rione3)
+    risultato34 = Risultati(ordine = ordine4, gare=gara3, rioni=rione2)
+    risultato35 = Risultati(ordine = ordine5, gare=gara3, rioni=rione1)
+
+    db.session.add_all([ordine1,
+                        ordine2,
+                        ordine3,
+                        ordine4,
+                        ordine5]
+                       )
 
     db.session.add_all([risultato11,
                        risultato12,
