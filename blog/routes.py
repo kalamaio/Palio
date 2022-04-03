@@ -1,12 +1,23 @@
 
 from flask import render_template, redirect, flash, url_for, request
-from flask_login import current_user, login_user, logout_user, login_required
+from flask_login import current_user, login_user, logout_user, login_required, LoginManager
 # Importa istanza di flask avviata dentro __init__.py
-from blog import app
+from blog import app, login_manager
 # Importa istanza di Post
 from blog.models import Post, Gare, User, Rioni, Risultati
 # Importa form di login
 from blog.forms import LoginForm
+
+
+
+#definizione login per parti sito dove il login è obbligo
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
+#definizione login per parti sito dove il login è obbligo
+@login_manager.unauthorized_handler
+def unauthorized_callback(): 
+    return redirect(url_for('login'))
 
 
 # Definizione delle rotte del sito 
@@ -16,6 +27,7 @@ def homepage ():
     return render_template ('homepage.html', posts = posts)
 
 @app.route ("/post/<int:post_id>")
+@login_required
 def post_dettaglio (post_id):
     post= Post.query.get_or_404 (post_id)
     return render_template ('post_dettaglio.html', post= post)
@@ -60,3 +72,4 @@ def login():
 def logout():
     logout_user()
     return redirect ( url_for("homepage"))
+
