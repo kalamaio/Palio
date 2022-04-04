@@ -73,24 +73,19 @@ ul {
 }
     
 
-.container.tabella:nth-child(odd) {
+.container.lista{
     border: 1px solid #d3d3d3;
     border-radius: 5px;
     text-indent: 16px;
 
-    background: #f0f0f0;
     margin: opx;
     padding: 0px; 
     
     }
     
-.container.tabella:nth-child(even) {
-    border: 1px solid #d3d3d3;
-    border-radius: 5px;
-    text-indent: 16px;
+table tr:nth-child(odd) {
     
-    background: #fff;
+    background: #d3d3d3;
     margin: opx;
     padding: 0px;
-    
     }

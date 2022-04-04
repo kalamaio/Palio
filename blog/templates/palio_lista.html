@@ -10,18 +10,18 @@
                     {% for risultato in risultati %}
                     <div class="single-post-home">
                     <h5 style ="padding-bottom: 15px;">Palio corso nel anno <strong>{{risultato[0].gare.data.strftime ('%Y')}}</strong></h5>
+                    <table class="container lista">
+                    <tr>
+                                <th>Rione</th>
+                                <th>Classificato</th>
+                    </tr>
                         {% for result in risultato%}
-                        <div class="container tabella">
-                        <div class="row align-items-start">
-                            <div class="col">
-                            <p class= "tabella">Rione: <strong>{{result.rioni.rione}}</strong></p>
-                            </div>
-                            <div class="col">
-                            <p class= "tabella"> Classificato <strong>{{result.ordine.classificato}}</strong></p>
-                            </div>
-                        </div>
-                        </diV>
+                            <tr>
+                                <td>{{result.rioni.rione}}</td>
+                                <td>{{result.ordine.classificato}}</td>
+                            </tr>
                         {% endfor %}
+                        </table>
                         </div>
                     {% endfor %}
     </div>
