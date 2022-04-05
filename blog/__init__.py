@@ -8,6 +8,10 @@ from flask_migrate import Migrate
 from config import Config
 # Importa login manager
 from flask_login import LoginManager
+from flask_admin import Admin
+
+
+
 
 
 
@@ -21,10 +25,12 @@ login_manager = LoginManager (app)
 
 # Impostazione che serve solo con sqllight per limitazione del database
 with app.app_context ():
-    if db.engine.url.drivername == 'sqlite':
+    if db.engine.url.drivername == 'sqlite': #da verificare non funziona
         migrate.init_app (app, db, render_as_batch = True)
+        
     else:
         migrate.init_app ( app, db )
+        
 
 
 # Importa file routes 

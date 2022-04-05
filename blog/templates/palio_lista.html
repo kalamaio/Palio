@@ -13,11 +13,13 @@
                     <table class="container lista">
                     <tr>
                                 <th>Rione</th>
+                                <th>Immagine</th>
                                 <th>Classificato</th>
                     </tr>
                         {% for result in risultato%}
                             <tr>
                                 <td>{{result.rioni.rione}}</td>
+                                <td><img src="{{result.rioni.immagine}}" alt="portaccia" width="50" height="50"></td>
                                 <td>{{result.ordine.classificato}}</td>
                             </tr>
                         {% endfor %}

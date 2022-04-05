@@ -2,19 +2,18 @@ from datetime import datetime
 from time import sleep
 from flask import session
 from werkzeug.security import generate_password_hash, check_password_hash
-from blog import db, login_manager
+from blog import db
 from flask_login import UserMixin
 from faker import Faker
 from faker.providers import lorem
+from flask_admin import Admin
 
 # Imposta faker per riempire database
 fake = Faker ('it_IT')
 fake.add_provider (lorem)
 
 
-@login_manager.user_loader
-def load_user(id):
-    return User.query.get(int(id))
+
 
 
 class User (db.Model, UserMixin):
@@ -26,7 +25,7 @@ class User (db.Model, UserMixin):
     posts = db.relationship('Post', backref='author', lazy='dynamic')
 
     def __repr__(self):
-        return f"User('{self.id}', '{self.username}', '{self.email}')"
+        return f"User('{self.username}', '{self.email}')"
 
     def set_password_hash(self, password):
         self.password = generate_password_hash(password)
@@ -50,6 +49,7 @@ class Post (db.Model):
 class Rioni (db.Model):
     id = db.Column(db.Integer, primary_key=True)
     rione = db.Column(db.String(120), nullable=False)
+    immagine = db.Column(db.String (200))
 
     risultati = db.relationship('Risultati', backref='rioni', lazy=True)
 
@@ -71,6 +71,7 @@ class Gare (db.Model):
     id = db.Column(db.Integer, primary_key=True)
     data = db.Column(db.DateTime, default=datetime.now())
     risultati = db.relationship('Risultati', backref='gare', lazy=True)
+    
 
     def __repr__(self) -> str:
         return f"Gare ('{self.data}', '{self.risultati}', '{self.id})"
