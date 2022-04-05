@@ -12,9 +12,9 @@ from blog.forms import LoginForm
 
 #definizione login per parti sito dove il login è obbligo
 @login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(user_id)
-#definizione login per parti sito dove il login è obbligo
+def load_user(id):
+    return User.query.get(int(id))
+# Quando si accede a parti dove richiesto login riderecta sul login.html
 @login_manager.unauthorized_handler
 def unauthorized_callback(): 
     return redirect(url_for('login'))
@@ -42,13 +42,6 @@ def palio ():
         
     return render_template ('palio_lista.html', risultati = pali, date = date)
 
-'''@app.route ('/palio/<int:palio_id>/singolo', methods=['GET', 'POST'])
-def palio_dettaglio (palio_id):
-    
-    risultati = Risultati.query.filter_by(gare_id = palio_id).all()
-    #anno = Gare.query.filter_by (Gare.id == palio_id).first()
-   
-    return render_template ('palio_dett.html', gara= risultati)'''
 
 @app.route ('/about')
 def about ():
