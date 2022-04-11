@@ -2,11 +2,12 @@
 from flask import render_template, redirect, flash, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required, LoginManager
 # Importa istanza di flask avviata dentro __init__.py
-from blog import app, login_manager
+from blog import app, login_manager, admin, db
 # Importa istanza di Post
-from blog.models import Post, Gare, User, Rioni, Risultati
+from blog.models import Ordine, Post, Gare, User, Rioni, Risultati
 # Importa form di login
 from blog.forms import LoginForm
+from flask_admin.contrib.sqla import ModelView
 
 
 
@@ -66,3 +67,9 @@ def logout():
     logout_user()
     return redirect ( url_for("homepage"))
 
+
+#admin 
+admin.add_view(ModelView(User, db.session))
+admin.add_view(ModelView(Gare, db.session))
+admin.add_view(ModelView(Risultati, db.session))
+admin.add_view(ModelView(Post, db.session))

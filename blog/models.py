@@ -25,7 +25,7 @@ class User (db.Model, UserMixin):
     posts = db.relationship('Post', backref='author', lazy='dynamic')
 
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}')"
+        return f"User('{self.username}')"
 
     def set_password_hash(self, password):
         self.password = generate_password_hash(password)
@@ -37,13 +37,13 @@ class User (db.Model, UserMixin):
 class Post (db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.now)
+    created_at = db.Column(db.DateTime, default=datetime.now, nullable= False)
     title = db.Column(db.String(120), nullable=False)
     description = db.Column(db.String(240))
     body = db.Column(db.Text(), nullable=False)
 
     def __repr__(self):
-        return f"Post ('{self.id}', '{self.title}')"
+        return f"Post ('{self.title}')"
 
 
 class Rioni (db.Model):
@@ -54,7 +54,7 @@ class Rioni (db.Model):
     risultati = db.relationship('Risultati', backref='rioni', lazy=True)
 
     def __repr__(self) -> str:
-        return f"Rioni ('{self.id}', '{self.rione}')"
+        return f"Rioni ('{self.rione}')"
 
 
 class Risultati (db.Model):
@@ -64,7 +64,7 @@ class Risultati (db.Model):
     gare_id = db.Column(db.ForeignKey('gare.id'))
 
     def __repr__(self) -> str:
-        return f"Risultati ({self.id}', '{self.rioni_id}', '{self.gare_id})"
+        return f"Risultati ({self.gare_id}')"
 
 
 class Gare (db.Model):
@@ -74,7 +74,7 @@ class Gare (db.Model):
     
 
     def __repr__(self) -> str:
-        return f"Gare ('{self.data}', '{self.risultati}', '{self.id})"
+        return f"Gare ('{self.data}')"
     
 class Ordine (db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -83,6 +83,10 @@ class Ordine (db.Model):
     
     def __repr__(self) -> str:
         return f"Ordine ('{self.classificato}')"
+    
+    
+    
+
 
 
 def insert_data():

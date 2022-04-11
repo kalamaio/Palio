@@ -21,6 +21,7 @@ app.config.from_object (Config)
 db = SQLAlchemy ( app )
 migrate = Migrate ( app, db)
 login_manager = LoginManager (app)
+admin = Admin(app, template_mode='bootstrap3')
 
 
 # Impostazione che serve solo con sqllight per limitazione del database
