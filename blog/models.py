@@ -64,7 +64,7 @@ class Risultati (db.Model):
     gare_id = db.Column(db.ForeignKey('gare.id'))
 
     def __repr__(self) -> str:
-        return f"Risultati ({self.gare_id}')"
+        return f"Risultati ('{self.gare_id}', '{self.rioni_id})"
 
 
 class Gare (db.Model):

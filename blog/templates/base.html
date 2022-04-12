@@ -23,6 +23,7 @@
                 <a class="nav-link nav-item" href="{{ url_for ('homepage') }}">Home</a>
                 <a class="nav-link nav-item" href="{{ url_for ('about') }}">About</a>
                 <a class="nav-link nav-item" href="{{ url_for ('palio') }}">Palio</a>
+                <a class="nav-link nav-item" href="{{ url_for ('login') }}">Log-in</a>
                 {% if current_user.is_authenticated %}
                 <a class="nav-link nav-item" href="{{ url_for ('logout') }}">Logout</a>
                 <a class="nav-link nav-item" href="{{ url_for ('admin.index') }}">Admin</a>
