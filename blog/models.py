@@ -53,6 +53,7 @@ class Rioni (db.Model):
 
     risultati = db.relationship('Risultati', backref='rioni', lazy=True)
 
+
     def __repr__(self) -> str:
         return f"Rioni ('{self.rione}')"
 
@@ -64,12 +65,13 @@ class Risultati (db.Model):
     gare_id = db.Column(db.ForeignKey('gare.id'))
 
     def __repr__(self) -> str:
-        return f"Risultati ('{self.gare_id}', '{self.rioni_id})"
+        return f"Risultati ('{self.gare_id}')"
 
 
 class Gare (db.Model):
     id = db.Column(db.Integer, primary_key=True)
     data = db.Column(db.DateTime, default=datetime.now())
+  
     risultati = db.relationship('Risultati', backref='gare', lazy=True)
     
 
