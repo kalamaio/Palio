@@ -6,7 +6,6 @@ from blog import db
 from flask_login import UserMixin
 from faker import Faker
 from faker.providers import lorem
-from flask_admin import Admin
 
 # Imposta faker per riempire database
 fake = Faker ('it_IT')
